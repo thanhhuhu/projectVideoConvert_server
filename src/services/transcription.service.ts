@@ -5,6 +5,8 @@ import { promisify } from "util";
 
 const execFileAsync = promisify(execFile);
 
+const FFMPEG_COMMAND = process.env.FFMPEG_PATH || "ffmpeg";
+
 export const processTranscription = async (
   file: Express.Multer.File,
   language: string
@@ -21,11 +23,12 @@ export const processTranscription = async (
 
   console.log("Video:", videoPath);
   console.log("Audio:", audioPath);
+  console.log("FFmpeg:", FFMPEG_COMMAND);
 
   try {
     console.log("Starting FFmpeg...");
 
-    await execFileAsync("ffmpeg", [
+    await execFileAsync(FFMPEG_COMMAND, [
       "-i",
       videoPath,
       "-vn",
@@ -67,6 +70,8 @@ export const processTranscription = async (
       // Ignore cleanup errors when the audio file does not exist.
     }
 
-    throw new Error("Failed to extract audio from video");
+    throw new Error(
+      "Failed to extract audio from video. Check FFMPEG_PATH or system PATH."
+    );
   }
 };
