@@ -1,5 +1,7 @@
-import express = require("express");
-import cors = require("cors");
+import express from "express";
+import cors from "cors";
+
+import transcriptionRoutes from "./routes/transcription.routes";
 
 const app = express();
 
@@ -18,4 +20,6 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
-export = app;
+app.use("/api", transcriptionRoutes);
+
+export default app;
