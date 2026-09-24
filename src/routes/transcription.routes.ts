@@ -14,9 +14,7 @@ const storage = multer.diskStorage({
   },
 
   filename: (_req, file, cb) => {
-    const extension = path.extname(
-      file.originalname
-    );
+    const extension = path.extname(file.originalname);
 
     const fileName =
       `${Date.now()}-${Math.round(
@@ -29,7 +27,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-
   limits: {
     fileSize: 500 * 1024 * 1024,
   },
@@ -41,11 +38,7 @@ const upload = multer({
       "video/webm",
     ];
 
-    if (
-      allowedTypes.includes(
-        file.mimetype
-      )
-    ) {
+    if (allowedTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
       cb(
